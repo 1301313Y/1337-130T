@@ -22,12 +22,15 @@
   "dependencies": {
     "co-fs": "^1.2.0",
     "commander": "^2.14.1",
+    "http": "0.0.0",
     "koa": "^1.2.0",
     "koa-bodyparser": "^2.2.0",
     "koa-cors": "0.0.16",
     "koa-logger": "^1.3.0",
     "koa-router": "^5.4.0",
-    "koa-static": "^2.0.0"
+    "koa-static": "^2.0.0",
+    "lodash": "^4.17.5",
+    "ws": "^4.0.0"
   },
   "author": "1301313Y",
   "license": "MIT",

@@ -16,7 +16,16 @@ When it comes to design, I'm a visual person. I like to see what something will 
 
 ![Screenshot](https://i.imgur.com/dUdIz4N.png)
 
+## Dependencies:
+* Python 3.x.x
+* NodeJS (Version Used In Development: 8.9.1)
+* React 16.2.0+
+
 ## Planned Exchanges (In Order)
 1. [Binance](https://www.binance.com)
 2. [Kraken](https://www.kraken.com/)
 3. TBA
+
+## Credits/Inspiration
+* [Gekko](https://github.com/askmike/gekko)
+* [Binance Trader](https://github.com/yasinkuyu/binance-trader)
