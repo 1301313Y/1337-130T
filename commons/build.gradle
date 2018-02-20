@@ -9,10 +9,6 @@ buildscript {
     }
 }
 
-plugins {
-    id 'org.jetbrains.intellij' version '0.2.18'
-}
-
 group 'com.leetbot'
 version '1.0.0'
 
@@ -27,11 +23,7 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
-    compile group: 'log4j', name: 'log4j', version: '1.2.17'
     compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
-    compile project(':gui')
-    compile project(':commons')
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
@@ -40,12 +32,4 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
-}
-intellij {
-    version '2017.3.3'
-}
-patchPluginXml {
-    changeNotes """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
 }

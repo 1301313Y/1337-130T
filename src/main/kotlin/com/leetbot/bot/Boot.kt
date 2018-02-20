@@ -1,8 +1,10 @@
-package com.leetbot
+package com.leetbot.bot
 
-import com.leetbot.config.Configurations
+import com.leetbot.commons.config.Configurations
+import javafx.application.Application
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
+import org.leetbot.gui.BotApplication
 
 /**
  * ${FILE_NAME}
@@ -47,6 +49,6 @@ fun main(args: Array<String>) {
         }
     }
     if(Configurations.hasAcceptedToConditions()) {
-
+        Application.launch(BotApplication::class.java, *args)
     }
 }

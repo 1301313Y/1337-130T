@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="647.0" prefWidth="781.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.leetbot.gui.controllers.Exchanges">
+    <ChoiceBox fx:id="exchangeChoiceBox" layoutX="15.0" layoutY="31.0" prefWidth="150.0" />
+    <Label layoutX="15.0" layoutY="14.0" text="Exchange" />
+    <Label layoutX="15.0" layoutY="71.0" text="API Key" />
+    <TextField fx:id="apiTextField" layoutX="16.0" layoutY="88.0" prefHeight="25.0" prefWidth="345.0" />
+    <Label layoutX="15.0" layoutY="126.0" text="Secret Key" />
+    <TextField fx:id="secretTextField" layoutX="15.0" layoutY="143.0" prefHeight="25.0" prefWidth="345.0" />
+    <Button fx:id="saveButton" layoutX="15.0" layoutY="193.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" text="Save" />
+    <ImageView fx:id="exchangeImage" fitHeight="150.0" fitWidth="256.0" layoutX="15.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true" />
+    <Hyperlink fx:id="exchangeLink" layoutX="15.0" layoutY="290.0" text="Official Website" />
+    <Label fx:id="exchangeDescription" layoutX="15.0" layoutY="275.0" prefHeight="150.0" prefWidth="473.0" />
+</AnchorPane>
