@@ -3,6 +3,8 @@ package com.leetbot.api.impl.binance.http
 import com.leetbot.api.http.Request
 import com.leetbot.api.throwable.APIException
 import com.leetbot.commons.utils.BotLogger
+import jdk.nashorn.internal.runtime.regexp.joni.Config.log
+import org.apache.commons.codec.binary.Hex
 import org.apache.commons.io.IOUtils
 import org.json.simple.JSONArray
 import org.json.simple.JSONObject
@@ -19,6 +21,11 @@ import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 import javax.net.ssl.SSLContext
 import java.io.*
+import java.util.*
+import javax.crypto.Mac
+import javax.crypto.spec.SecretKeySpec
+
+
 
 
 /**
@@ -28,7 +35,7 @@ import java.io.*
  * @since 2/19/2018
  * @version 1.0.0
  */
-class BinanceRequest(private val request: String): Request {
+class BinanceRequest(private var request: String): Request {
 
     enum class RequestMethod {
         GET,
@@ -43,7 +50,7 @@ class BinanceRequest(private val request: String): Request {
     }
 
     var connection: HttpURLConnection? = null
-    val properties: Map<String, String> = HashMap()
+    val properties: HashMap<String, String> = HashMap()
     var method: RequestMethod = RequestMethod.GET
     var lastResponse = ""
     private var requestBody = ""
@@ -142,6 +149,45 @@ class BinanceRequest(private val request: String): Request {
         return this
     }
 
+    fun sign(api: String, secret: String, options: Map<String, String>?): BinanceRequest {
+        val humanMessage = "Please check the \'Exchanges\' tab, and ensure your API/Secret key are saved!"
+        if (api.isEmpty())
+            throw APIException("Missing Binance API key! " + humanMessage, IllegalArgumentException())
+        if (secret.isEmpty())
+            throw APIException("Missing Binance secret key! " + humanMessage, IllegalArgumentException())
+
+        if (secret.isNotEmpty() && !request.contains("&signature=")) {
+            val list = LinkedList<String>()
+            if (options != null) {
+                for (key in options.keys) {
+                    list.add(key + "=" + options[key])
+                }
+            }
+            list.add("recvWindow=" + 7000)
+            list.add("timestamp=" + Date().time)
+            val queryToAdd = list.joinToString("&")
+            var query = ""
+            BotLogger.debug("Signature: RequestUrl = %s".format(request))
+            if (request.contains("?")) {
+                query = request.substring(request.indexOf('?') + 1) + "&"
+            }
+            query += queryToAdd
+
+            BotLogger.debug("Signature: queryToInclude=%s queryToAdd=%s".format(query, queryToAdd))
+            try {
+                val signature = encode(secret, query) // set the HMAC hash header
+                val concatenator = if (request.contains("?")) "&" else "?"
+                request += concatenator + queryToAdd + "&signature=" + signature
+            } catch (e: Exception) {
+                throw APIException("Encryption error!", e)
+            }
+
+        }
+        properties["X-MBX-APIKEY"] = api
+        properties["Content-Type"] = "application/x-www-form-urlencoded"
+        return this
+    }
+
     /**
      * Settings method as post, keeping interface fluid
      * @return this request object
@@ -169,8 +215,11 @@ class BinanceRequest(private val request: String): Request {
         return this
     }
 
-    override fun encode() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    fun encode(key: String, data: String): String {
+        val hmac = Mac.getInstance("HmacSHA256")
+        val keySpec = SecretKeySpec(key.toByteArray(Charsets.UTF_8), "HmacSHA256")
+        hmac.init(keySpec)
+        return Hex.encodeHexString(hmac.doFinal(data.toByteArray(Charsets.UTF_8)))
     }
 
     fun toJsonArray(): JSONArray {

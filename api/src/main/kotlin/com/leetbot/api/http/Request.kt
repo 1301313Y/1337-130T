@@ -12,6 +12,4 @@ interface Request {
     fun open(): Request
 
     fun read(): Request
-
-    fun encode()
 }

@@ -29,5 +29,5 @@ fun main(args: Array<String>) {
     }
     val exchange = Exchange.binance
     val api = BinanceAPI(exchange.api, exchange.secret)
-    println(api.candlesticks(TradingPair("XVG", "ETH"), TimePeriod.FIVE_MINUTE))
+    println(api.balances())
 }
