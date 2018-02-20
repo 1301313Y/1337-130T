@@ -24,7 +24,13 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
-    compile group: 'log4j', name: 'log4j', version: '1.2.17'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.16'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.2'
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.4'
+    compile 'commons-net:commons-net:3.3'
+    compile 'commons-io:commons-io:2.4'
+    compile 'commons-codec:commons-codec:1.9'
+    compile project(":commons")
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 

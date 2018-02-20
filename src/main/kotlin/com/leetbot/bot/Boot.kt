@@ -1,36 +1,12 @@
 package com.leetbot.bot
 
+import com.leetbot.api.data.TimePeriod
+import com.leetbot.api.impl.binance.BinanceAPI
+import com.leetbot.api.wrapper.TradingPair
 import com.leetbot.commons.config.Configurations
+import com.leetbot.commons.exchange.Exchange
 import javafx.application.Application
-import org.apache.log4j.Level
-import org.apache.log4j.Logger
 import org.leetbot.gui.BotApplication
-
-/**
- * ${FILE_NAME}
- *
- * @author Notorious
- * @version 1.0.0
- * @since 2/5/2018
- */
-
-object BotLogger {
-
-    private val logger = Logger.getRootLogger()
-
-    fun info(message: Any) {
-        logger.info(message)
-    }
-    fun warn(message: Any) {
-        logger.warn(message)
-    }
-    fun error(message: Any, thrown: Throwable) {
-        logger.error(message, thrown)
-    }
-    fun setLevel(level: Level) {
-        logger.level = level
-    }
-}
 
 fun main(args: Array<String>) {
     println("-".repeat(80))
@@ -49,6 +25,9 @@ fun main(args: Array<String>) {
         }
     }
     if(Configurations.hasAcceptedToConditions()) {
-        Application.launch(BotApplication::class.java, *args)
+       // Application.launch(BotApplication::class.java, *args)
     }
+    val exchange = Exchange.binance
+    val api = BinanceAPI(exchange.api, exchange.secret)
+    println(api.candlesticks(TradingPair("XVG", "ETH"), TimePeriod.FIVE_MINUTE))
 }

@@ -1,4 +1,5 @@
 rootProject.name = 'leetbot'
 include 'gui'
 include 'commons'
+include 'api'
 
