@@ -8,8 +8,10 @@ import java.util.LinkedList
 import com.leetbot.api.impl.binance.http.BinanceRequest
 import com.leetbot.api.impl.binance.wrapper.BinanceCandleStick
 import com.leetbot.api.wrapper.Balance
+import com.leetbot.api.wrapper.Trade
 import org.json.simple.JSONArray
 import org.json.simple.JSONObject
+import java.math.BigDecimal
 
 
 /**
@@ -35,11 +37,14 @@ class BinanceAPI(api: String, secret: String): AbstractAPI(api, secret) {
         return NAME
     }
 
-    override fun candlesticks(pair: TradingPair, period: TimePeriod): List<CandleStick> {
+    override fun candlesticks(pair: TradingPair, period: TimePeriod, start: Long, end: Long, limit: Int): List<CandleStick> {
         val u = BASE_API_V1_URL
-                .plus("klines?symbol=").plus(pair.toString())
+                .plus("klines")
+                .plus("?symbol=").plus(pair.toString())
                 .plus("&interval=").plus(period.id)
-                .plus("&limit=").plus(500)
+                .plus(if (start > 0) "&startTime=%d".format(start) else "")
+                .plus(if (end > 0) "&endTime=%d".format(end) else "")
+                .plus(if (limit in 1..500) "&limit=%d".format(limit) else "")
         return BinanceRequest(u).open().read().toJsonArray().mapTo(LinkedList()) { BinanceCandleStick(it as JSONArray) }
     }
 
@@ -48,6 +53,13 @@ class BinanceAPI(api: String, secret: String): AbstractAPI(api, secret) {
                 .sign(api, secret, null).read().toJsonObject()
     }
 
+    override fun currentPrice(pair: TradingPair): BigDecimal {
+        val u = BASE_API_V3_URL
+                .plus("ticker/")
+                .plus("price")
+                .plus("?symbol=").plus(pair.toString())
+        return BigDecimal(BinanceRequest(u).open().read().toJsonObject()["price"] as String)
+    }
 
     override fun balances(): List<Balance> {
         return (account()["balances"] as JSONArray).map { it as JSONObject }.map {
@@ -56,6 +68,25 @@ class BinanceAPI(api: String, secret: String): AbstractAPI(api, secret) {
             val frozen = (it["locked"] as String).toBigDecimal()
             val total = available + frozen
             Balance(asset, total, available, frozen)
+        }.toList()
+    }
+
+    override fun aggregatedTrades(pair: TradingPair, fromID: Long, start: Long, end: Long, limit: Int): List<Trade> {
+        val u = BASE_API_V1_URL
+                .plus("aggTrades")
+                .plus("?symbol=").plus(pair.toString())
+                .plus(if (fromID > 0) "&fromId=%d".format(fromID) else "")
+                .plus(if (start > 0) "&startTime=%d".format(start) else "")
+                .plus(if (end > 0) "&endTime=%d".format(end) else "")
+                .plus(if (limit in 1..500) "&limit=%d".format(limit) else "")
+        return BinanceRequest(u).open().read().toJsonArray().map { it as JSONObject }.map {
+            val id = (it["a"] as Long)
+            val price = (it["p"] as String).toBigDecimal()
+            val quantity = (it["q"] as String).toBigDecimal()
+            val timestamp = (it["T"] as Long)
+            val maker = (it["m"] as Boolean)
+            val best = (it["M"] as Boolean)
+            Trade(id, price, quantity, timestamp, maker, best)
         }.toList()
     }
 }

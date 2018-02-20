@@ -20,7 +20,7 @@ import java.io.FileWriter
  */
 object Configurations {
 
-    private val directory = File(JFileChooser().fileSystemView.defaultDirectory, "1337 130T")
+    private val directory = File(JFileChooser().fileSystemView.defaultDirectory, "1337130T")
     private val file = File(directory, "config.json")
     private val configuration = getConfigurationObject()
 
@@ -37,6 +37,10 @@ object Configurations {
             save(obj)
         }
         return parser.parse(FileReader(file)) as JSONObject
+    }
+
+    fun rootDirectory(): File {
+        return directory
     }
 
     private fun save() {

@@ -32,6 +32,7 @@ dependencies {
     compile project(':gui')
     compile project(':commons')
     compile project(':api')
+    compile project(':python')
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 

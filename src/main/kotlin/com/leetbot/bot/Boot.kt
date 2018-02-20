@@ -1,8 +1,6 @@
 package com.leetbot.bot
 
-import com.leetbot.api.data.TimePeriod
-import com.leetbot.api.impl.binance.BinanceAPI
-import com.leetbot.api.wrapper.TradingPair
+import com.leetbot.Bridge
 import com.leetbot.commons.config.Configurations
 import com.leetbot.commons.exchange.Exchange
 import javafx.application.Application
@@ -25,9 +23,6 @@ fun main(args: Array<String>) {
         }
     }
     if(Configurations.hasAcceptedToConditions()) {
-       // Application.launch(BotApplication::class.java, *args)
+       Application.launch(BotApplication::class.java, *args)
     }
-    val exchange = Exchange.binance
-    val api = BinanceAPI(exchange.api, exchange.secret)
-    println(api.balances())
 }

@@ -1,0 +1,17 @@
+group 'com.leetbot'
+version '1.0.0'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.python', name: 'jython-standalone', version: '2.7.0'
+    compile project(":api")
+    compile project(":commons")
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

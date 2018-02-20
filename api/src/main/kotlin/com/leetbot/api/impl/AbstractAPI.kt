@@ -12,7 +12,7 @@ import com.leetbot.api.wrapper.Balance
  */
 abstract class AbstractAPI(protected val api: String, protected val secret: String): API {
 
-    override fun getBalance(name: String): Balance {
+    override fun balance(name: String): Balance {
         return balances().first { it.name.toLowerCase() == name.toLowerCase() }
     }
 }
