@@ -1,8 +1,6 @@
 package com.leetbot.bot
 
-import com.leetbot.Bridge
 import com.leetbot.commons.config.Configurations
-import com.leetbot.commons.exchange.Exchange
 import javafx.application.Application
 import org.leetbot.gui.BotApplication
 

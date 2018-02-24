@@ -19,7 +19,12 @@ When it comes to design, I'm a visual person. I like to see what something will 
 ## Core Languages:
 * Java 8+
 * Kotlin 1.2.21+
-* Python 3.x.x
+
+## What Is Kotlin?
+_"Kotlin is a statically-typed programming language that runs on the Java virtual machine and also can be compiled to JavaScript source code or use the LLVM compiler infrastructure. Its primary development is from a team of JetBrains programmers based in Saint Petersburg, Russia. While the syntax is not compatible with Java, Kotlin is designed to interoperate with Java code and is reliant on Java code from the existing Java Class Library, such as the collections framework. Kotlin uses aggressive type inference to determine the type of values and expressions for which type has been left unstated. This reduces language verbosity relative to Java, which demands often entirely redundant type specifications. (Wikipedia)"_
+
+* [Project Website](https://kotlinlang.org/)
+* [Tutorials](https://kotlinlang.org/docs/tutorials/)
 
 ## Planned Exchanges (In Order)
 1. [Binance](https://www.binance.com)

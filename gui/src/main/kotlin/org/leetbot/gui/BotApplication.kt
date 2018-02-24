@@ -9,7 +9,7 @@ import javafx.scene.Scene
 /**
  * ${FILE_NAME}
  *
- * @author Notorious
+ * @author 1301313Y
  * @since 2/19/2018
  * @version 1.0.0
  */
@@ -17,7 +17,8 @@ class BotApplication : javafx.application.Application() {
 
     override fun start(stage: Stage?) {
         val root = FXMLLoader.load<Any>(javaClass.getResource("view/application.fxml")) as Parent
-        val scene = Scene(root, 765.0, 503.0)
+        val scene = Scene(root)
+        //scene.stylesheets.add(this::class.java.getResource("modena-dark.css").toExternalForm())
         stage!!.title = "1337 130T"
         stage.scene = scene
         stage.show()
