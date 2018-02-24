@@ -3,7 +3,7 @@ package com.leetbot.api.http
 /**
  * ${FILE_NAME}
  *
- * @author Notorious
+ * @author 1301313Y
  * @since 2/19/2018
  * @version 1.0.0
  */
